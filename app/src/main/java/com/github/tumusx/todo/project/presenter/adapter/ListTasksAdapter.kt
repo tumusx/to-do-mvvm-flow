@@ -3,20 +3,20 @@ package com.github.tumusx.todo.project.presenter.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.github.tumusx.todo.project.data.repository.model.TasksVO
+import com.github.tumusx.todo.project.data.repository.model.TaskVO
 import com.github.tumusx.todo.project.databinding.ContainerItemTasksListBinding
 
 class ListTasksAdapter : RecyclerView.Adapter<ListTasksAdapter.ListsTasksViewHolder>() {
 
-    private var tasksLists = emptyList<TasksVO>()
+    private var tasksLists = emptyList<TaskVO>()
 
     class ListsTasksViewHolder(private val binding: ContainerItemTasksListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun configUI(tasksVO: TasksVO) {
+        fun configUI(taskVO: TaskVO) {
             with(binding) {
-                txtDateInsertTask.text = tasksVO.dataDescriptionInsert
-                txtDescriptionTask.text = tasksVO.descriptionInfo
-                txtTittleTasks.text = tasksVO.tittleInfo
+                txtDateInsertTask.text = taskVO.dataDescriptionInsert
+                txtDescriptionTask.text = taskVO.descriptionInfo
+                txtTittleTasks.text = taskVO.tittleInfo
             }
         }
     }
@@ -31,7 +31,7 @@ class ListTasksAdapter : RecyclerView.Adapter<ListTasksAdapter.ListsTasksViewHol
         holder.configUI(tasksLists[position])
     }
 
-    fun updateLists(tasksListsUpdate: List<TasksVO>) {
+    fun updateLists(tasksListsUpdate: List<TaskVO>) {
         tasksLists = tasksListsUpdate
         notifyDataSetChanged()
     }

@@ -1,16 +1,16 @@
-package com.github.tumusx.todo.project.presenter.viwModel
+package com.github.tumusx.todo.project.presenter.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.tumusx.todo.project.data.repository.TasksRepository
-import com.github.tumusx.todo.project.data.repository.model.TasksVO
+import com.github.tumusx.todo.project.data.repository.TaskRepository
+import com.github.tumusx.todo.project.data.repository.model.TaskVO
 import com.github.tumusx.todo.project.presenter.state.ActionsListsState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class ActionsListViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
+class ActionsListViewModel(private val taskRepository: TaskRepository) : ViewModel() {
     private val state: MutableStateFlow<ActionsListsState> = MutableStateFlow(ActionsListsState.IsLoadingRequest)
     val stateActions: StateFlow<ActionsListsState> = state
 
@@ -18,10 +18,10 @@ class ActionsListViewModel(private val tasksRepository: TasksRepository) : ViewM
         listsTasks()
     }
 
-    fun insertTasks(tasksVO: TasksVO) {
+    fun insertTasks(taskVO: TaskVO) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                tasksRepository.insertTasks(tasksVO)
+                taskRepository.insertTasks(taskVO)
             } catch (exception: Exception) {
                 exception.printStackTrace()
             }
@@ -31,7 +31,7 @@ class ActionsListViewModel(private val tasksRepository: TasksRepository) : ViewM
      private fun listsTasks() {
         viewModelScope.launch(Dispatchers.IO) {
             state.value = ActionsListsState.IsLoadingRequest
-            tasksRepository.listsTasks().onSuccess {
+            taskRepository.listsTasks().onSuccess {
                 state.value = ActionsListsState.ResultRequest(it)
             }.onFailure {
                 state.value = ActionsListsState.MessageErrorLoadData(it.localizedMessage ?: "Erro ao localizar lista")

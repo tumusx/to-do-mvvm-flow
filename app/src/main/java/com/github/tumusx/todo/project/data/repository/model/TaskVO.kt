@@ -1,6 +1,6 @@
 package com.github.tumusx.todo.project.data.repository.model
 
-data class TasksVO(
+data class TaskVO(
 var idTaskInfo: Long? = null,
 var tittleInfo: String = "",
 var descriptionInfo: String = "",

@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import com.github.tumusx.todo.project.data.dao.TasksDAO
 import com.github.tumusx.todo.project.data.database.TasksDatabase
-import com.github.tumusx.todo.project.data.repository.TasksRepository
-import com.github.tumusx.todo.project.presenter.viwModel.ActionsListViewModel
+import com.github.tumusx.todo.project.data.repository.TaskRepository
+import com.github.tumusx.todo.project.presenter.viewModel.ActionsListViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,7 +23,7 @@ val listTaskModule = module {
 
 
     factory {
-        TasksRepository(get())
+        TaskRepository(get())
     }
     viewModel {
         ActionsListViewModel(get())
