@@ -2,6 +2,7 @@ package com.github.tumusx.todo.project.presenter.viewModel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.github.tumusx.todo.project.common.ResultDataSourceUtil
 import com.github.tumusx.todo.project.data.entity.Task
 import com.github.tumusx.todo.project.data.repository.TaskRepository
 import com.github.tumusx.todo.project.data.repository.model.TaskVO
@@ -13,6 +14,7 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asFlow
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
@@ -28,6 +30,7 @@ class ActionsListViewModelTest {
     @MockK
     private val viewModel = ActionsListViewModel(repository)
 
+
     @Test
     fun whenChangedObservableViewModel() {
         val listMock = mutableListOf<TaskVO>(
@@ -39,9 +42,8 @@ class ActionsListViewModelTest {
             )
         )
 
-        every { repository.listsTasks() } returns listMock
+        every { repository.listsTasks() } returns MutableStateFlow(ResultDataSourceUtil.SuccessResultDataSourceDataSourceUtil(listMock))
         viewModel.listsTasks()
-        viewModel.stateActions.observeForever(onDataLoad)
         verify { repository.listsTasks() }
         verify {
             onDataLoad.onChanged(
@@ -61,7 +63,6 @@ class ActionsListViewModelTest {
         )
         every { repository.insertTasks(taskVO) } returns result
         viewModel.insertTasks(taskVO)
-        viewModel.stateActions.observeForever(onDataLoad)
 
         verify { repository.insertTasks(taskVO) }
         verify { onDataLoad.onChanged(ActionsListsState.SuccessInsert(true)) }

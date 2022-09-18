@@ -19,13 +19,17 @@ class ListTasksFragment : Fragment() {
 
     private val viewModelAction: ActionsListViewModel by viewModel()
     private lateinit var binding: ListsTasksFragmentBinding
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = ListsTasksFragmentBinding.inflate(layoutInflater)
         onConfigState()
         return binding.root
     }
 
-    private fun onConfigAdapter(tasks: List<TaskVO>){
+    private fun onConfigAdapter(tasks: List<TaskVO>) {
         val listTasksAdapter = ListTasksAdapter()
         binding.rvListsTasks.adapter = listTasksAdapter
         listTasksAdapter.updateLists(tasks)
@@ -33,7 +37,7 @@ class ListTasksFragment : Fragment() {
 
     private fun onConfigState() {
         viewLifecycleOwner.lifecycleScope.launch {
-/*            viewModelAction.stateActions.collect { state ->
+            viewModelAction.stateActions.collect { state ->
                 when (state) {
                     is ActionsListsState.ResultRequest -> {
                         onConfigAdapter(state.taskVOItems)
@@ -47,8 +51,11 @@ class ListTasksFragment : Fragment() {
                     is ActionsListsState.MessageErrorLoadData -> {
                         Snackbar.make(binding.root, state.messageError, Snackbar.LENGTH_LONG).show()
                     }
+                    else -> {
+                        print("Error")
+                    }
                 }
-            }*/
+            }
         }
     }
 
