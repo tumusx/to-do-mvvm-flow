@@ -13,6 +13,6 @@ interface TasksDAO {
 
 
     @Query("SELECT *FROM tasks")
-    suspend fun listTasks(): List<Task>
+     fun listTasks(): List<Task>
 
 }

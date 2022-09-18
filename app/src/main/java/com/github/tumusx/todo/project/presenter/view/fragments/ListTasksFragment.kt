@@ -33,7 +33,7 @@ class ListTasksFragment : Fragment() {
 
     private fun onConfigState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModelAction.stateActions.collect { state ->
+/*            viewModelAction.stateActions.collect { state ->
                 when (state) {
                     is ActionsListsState.ResultRequest -> {
                         onConfigAdapter(state.taskVOItems)
@@ -48,7 +48,7 @@ class ListTasksFragment : Fragment() {
                         Snackbar.make(binding.root, state.messageError, Snackbar.LENGTH_LONG).show()
                     }
                 }
-            }
+            }*/
         }
     }
 
